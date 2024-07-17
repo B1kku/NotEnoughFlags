@@ -1,15 +1,17 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
-group = "your.group.name"
+group = "com.github.b1kku"
 version = "0.0.1"
-description = "Asd"
+description = "Even more extra WorldGuard extra flags"
+val projectName = "NotEnoughFlags"
+val authors = listOf("B1kku")
 
-val projectName = "ProjectName"
 // Any extra variables accessible to resources
 val extras = mapOf(
   "projectName" to projectName,
-  "main" to "${project.group}.${projectName.toLowerCase()}.${projectName}"
+  "main" to "${project.group}.${projectName.toLowerCase()}.${projectName}",
+  "authors" to authors.joinToString(", ")
 )
 
 extra.apply { extras.forEach { (key, value) -> set(key, value) }}
