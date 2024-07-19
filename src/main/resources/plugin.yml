@@ -5,3 +5,4 @@ main: ${main}
 description: ${description}
 authors: [${authors}]
 load: STARTUP
+depend: [WorldGuard]
