@@ -24,12 +24,16 @@ class NotEnoughFlags : JavaPlugin() {
 
   override fun onDisable() {}
 
+  // Get all flags that implement flagimplementor instantiated
+  // This means I don't need a stupid manual registry
+  // At the expense of some startup time
   fun getAllFlags(): List<FlagImplementor> {
     return FlagImplementor::class.sealedSubclasses.map { flagClass ->
       flagClass.constructors.first().call()
     }
   }
 
+  // Each flag sets it's own config if it implements ConfigurableFlag
   fun setDefaultConfig(flags: List<FlagImplementor>) {
     for (flag in flags) {
       var defaultConfig: Map<String, Any> = mapOf("enable" to true)
@@ -38,6 +42,7 @@ class NotEnoughFlags : JavaPlugin() {
         defaultConfig = defaultConfig + flag.defaultConfig
       }
       config.addDefault(flag.flag.name, defaultConfig)
+      config.setComments(flag.flag.name, listOf(flag.description))
     }
     config.options().copyDefaults(true)
     saveConfig()

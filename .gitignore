@@ -4,6 +4,7 @@
 
 ### Kotlin ###
 kls_database.db
+bin/
 
 ### Java ###
 # Compiled class file

@@ -12,6 +12,7 @@ sealed interface FlagImplementor {
   fun register() {
     logger.info("Registering WG flag: ${flag.name}")
     try {
+      logger.info("Registering ${this.flag.name}")
       WorldGuard.getInstance().flagRegistry.register(flag)
     } catch (e: FlagConflictException) {
       logger.severe(

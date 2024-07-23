@@ -12,7 +12,7 @@ import org.bukkit.inventory.EquipmentSlot
 class VillagerTrade : Listener, FlagImplementor, ConfigurableFlag {
 
   override val flag = StateFlag("villager-trade", true)
-  override val description = "Asd"
+  override val description = "Prevent **INTERACTING** with villagers or not"
 
   val wanderingTraderConfig = "include-wandering-trader" to true
   override val defaultConfig = mapOf(wanderingTraderConfig)
