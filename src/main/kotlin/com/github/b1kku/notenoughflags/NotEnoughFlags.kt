@@ -17,8 +17,21 @@ class NotEnoughFlags : JavaPlugin() {
     logger.log(Level.INFO, "Plugin enabled with version: ${pluginMeta.version}")
 
     var customFlags = getAllFlags()
+    setDefaultConfig(customFlags)
+    customFlags = customFlags.filter { config.getBoolean("${it.flag.name}.enable") }
+    registerFlags(customFlags)
+  }
 
-    for (flag in customFlags) {
+  override fun onDisable() {}
+
+  fun getAllFlags(): List<FlagImplementor> {
+    return FlagImplementor::class.sealedSubclasses.map { flagClass ->
+      flagClass.constructors.first().call()
+    }
+  }
+
+  fun setDefaultConfig(flags: List<FlagImplementor>) {
+    for (flag in flags) {
       var defaultConfig: Map<String, Any> = mapOf("enable" to true)
       if (flag is ConfigurableFlag) {
         // Override defaultConfig, meaning if flag contains enable false, it'll override this
@@ -28,8 +41,10 @@ class NotEnoughFlags : JavaPlugin() {
     }
     config.options().copyDefaults(true)
     saveConfig()
-    customFlags = customFlags.filter { config.getBoolean("${it.flag.name}.enable") }
-    for (flag in customFlags) {
+  }
+
+  fun registerFlags(flags: List<FlagImplementor>) {
+    for (flag in flags) {
       flag.register()
       if (flag is ConfigurableFlag) {
         flag.updateConfig(config.getConfigurationSection(flag.flag.name))
@@ -37,14 +52,6 @@ class NotEnoughFlags : JavaPlugin() {
       if (flag is Listener) {
         server.pluginManager.registerEvents(flag, this)
       }
-    }
-  }
-
-  override fun onDisable() {}
-
-  fun getAllFlags(): List<FlagImplementor> {
-    return FlagImplementor::class.sealedSubclasses.map { flagClass ->
-      flagClass.constructors.first().call()
     }
   }
 }
