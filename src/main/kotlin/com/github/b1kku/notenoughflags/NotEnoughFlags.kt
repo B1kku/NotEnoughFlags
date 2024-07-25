@@ -42,7 +42,7 @@ class NotEnoughFlags : JavaPlugin() {
         defaultConfig = defaultConfig + flag.defaultConfig
       }
       config.addDefault(flag.flag.name, defaultConfig)
-      config.setComments(flag.flag.name, listOf(flag.description))
+      config.setComments(flag.flag.name, flag.description.lines().map { it.trim() })
     }
     config.options().copyDefaults(true)
     saveConfig()

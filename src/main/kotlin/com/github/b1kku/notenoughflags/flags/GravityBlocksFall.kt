@@ -2,7 +2,6 @@ package com.github.b1kku.notenoughflags.flags
 
 import com.github.b1kku.notenoughflags.utils.WorldGuardUtils
 import com.sk89q.worldguard.protection.flags.StateFlag
-import org.bukkit.block.Block
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityChangeBlockEvent
